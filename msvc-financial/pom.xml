@@ -169,7 +169,7 @@
 							<encoding>UTF-8</encoding>
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>true</failsOnError>
-							<linkXRef>false</linkXRef>
+							<skip>true</skip>
 							<suppressionsLocation>checkstyle.xml</suppressionsLocation>
 						</configuration>
 						<goals>
