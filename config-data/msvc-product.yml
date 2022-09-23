@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: dev
+    
+---
+# Puerto de entorno de desarrollo 8092
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+spring:
+  profiles: dev
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/product
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+    instance:
+      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'info'
+  info:
+    env:
+      enabled: true
+info:
+  app:
+    version: 1.0.0
+    name: Microservices Product
+    description: Microservices related to the maintenance of products
+
+---
+#Puerto de entorno de producción 8002
+server:
+  port: 8002
+spring:
+  profiles: prod

@@ -1,0 +1,58 @@
+spring:
+  profiles:
+    active: dev
+    
+---
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+spring:
+  profiles: dev
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: MSVC-CLIENT
+          uri: lb://MSVC-CLIENT
+          predicates:
+            - Path=/clients/**
+        - id: MSVC-PRODUCT
+          uri: lb://MSVC-PRODUCT
+          predicates:
+            - Path=/products/**
+        - id: MSVC-ADMINISTRATIVE
+          uri: lb://MSVC-ADMINISTRATIVE
+          predicates:
+            - Path=/administrative/**
+        - id: MSVC-FINANCIAL
+          uri: lb://MSVC-FINANCIAL
+          predicates:
+            - Path=/finantial/**
+
+server:
+  port: 8080
+
+info:
+  app:
+    version: 1.0.0
+    name: Gateway
+    description: Centralizes and routes all requests from the outside to each microservice
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - mappings
+          - env
+          - health
+          - info
